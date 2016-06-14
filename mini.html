@@ -1,0 +1,451 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>(jquery)右边折叠菜单点击展开兼容火狐、IE6</title>
+<script src="jquery.min.js"></script>
+<script type="text/javascript">
+
+window.onerror=function(){
+	arglen=arguments.length;   
+    var errorMsg="参数个数："+arglen+"个";   
+    for(var i=0;i<arglen;i++){   
+		errorMsg+="\n参数"+(i+1)+"："+arguments[i];
+	}
+	errtxtout.value+=errorMsg+"\n";
+	//errmsg.style.display='block';
+}
+
+$(document).ready(function(){
+	
+	$('#righteject strong').toggle(
+	  function () {
+		$(this).removeClass("rightejectthis").next("div").animate({width: '-400px'}, "10",function(){
+			//jiantou.innerHTML='<';
+			//jiantou.style.background='url(player_bg.png) no-repeat -0px 0;';
+			$("#jiantou").css("background",'url(player_bg.png) no-repeat -0px 0');
+		});
+	  },
+	  function () {
+		//$(this).addClass("rightejectthis").next("div").animate({width: '+400px'}, "30",function(){
+			//jiantou.innerHTML='>';
+			//jiantou.style.background='url(player_bg.png) no-repeat -23px 0;';
+			$(".rightejectcon").css("width","400px");
+			$("#jiantou").css("background",'url(player_bg.png) no-repeat -23px 0');
+		//});
+	  }
+	);
+	$('#righteject strong span').css("margin-top",-$('#righteject strong span').height()*0.5);
+
+});
+</script>
+<style>
+#righteject {
+	position: fixed;
+	top: 10px;
+	right: 0px;
+	z-index: 900000000;
+	_position: absolute;
+	/*-moz-box-shadow:-1px 2px 15px #787878; -webkit-box-shadow:-1px 2px 15px #787878; box-shadow:-1px 2px 15px #787878;*/
+	border-radius: 5px 0px 0px 5px;
+	_top: expression(documentElement.scrollTop+200);
+	background-color: #383838;
+}
+body {
+	moz-user-select: -moz-none;
+	-moz-user-select: none;
+	-o-user-select:none;
+	-khtml-user-select:none;
+	-webkit-user-select:none;
+	-ms-user-select:none;
+	user-select:none;
+	background-color: transparent;
+}
+
+.rightejecttit {
+	width: 22px;
+	height: 115px;
+	text-align: center;
+	display: block;
+	float: left;
+	cursor: pointer;
+	background-color: #383838;
+	color: #FFF;
+	border-radius: 5px 0px 0px 5px;
+}
+
+.rightejectcon {
+	width: 0px;
+	height: 115px;
+	overflow: hidden;
+	float: left;
+	background-color: #000;
+	font-family: "Microsoft YaHei" ! important;
+	color: #828282;
+}
+
+.rightejecttit span {
+	position: relative;
+	top: 50%;
+	display: block;
+	z-index: 910000000;
+}
+
+.rightejectthis {
+	background-color: #383838;
+}
+
+.bar_op {
+    position: absolute;
+    left: 100px;
+    top: 30px;
+    width: 280px;
+}
+
+input, select, textarea, th {
+    color: #8B8B8B;
+    background-color: #FFF;
+    font-size: 12px;
+    line-height: 1.5em;
+    font-family: Arial,Tahoma,"hiragino sans gb",Helvetica;
+}
+
+.bar_op strong {
+    background: url(player_bg.png) no-repeat;
+    display: block;
+    vertical-align: top;
+    float: left;
+    margin-top: 7px;
+    margin-left: 3px;
+    border: 0;
+    cursor: pointer;
+}
+.bar_op .prev_bt {
+    background-position: -69px 0;
+    width: 36px;
+    height: 28px;
+    float: left;
+    margin-top: 7px;
+    margin-left: 3px;
+}
+
+.bar_op .play_bt{
+    background-position: -105px 0;
+    width: 42px;
+    height: 42px;
+    margin-top: 0;
+}
+.bar_op .pause_bt{
+    background-position:-291px -88px;
+    width: 42px;
+    height: 42px;
+    margin-top: 0;
+}
+.bar_op .next_bt {
+    background-position: -147px -0;
+    width: 36px;
+    height: 36px;
+}
+.bar_op .cycle_bt {
+    background-position: -219px 0;
+    width: 36px;
+    height: 36px;
+}
+.play_bt{background-position:-105px 0}
+.play_bt:hover{background-position:-105px -42px}
+.pause_bt{background-position:-291px -88px}
+.pause_bt:hover{background-position:-333px -88px}
+.prev_bt{background-position:-69px 0}
+.prev_bt:hover{background-position:-69px -32px}
+.next_bt{background-position:-147px -0}
+.next_bt:hover{background-position:-147px -32px}
+.music_info {
+    position: absolute;
+    color: #FFF;
+    left: 100px;
+    top: 5px;
+    height: 20px;
+    width: 100%;
+}
+.music_info2 {
+    position: absolute;
+    color: hsla(0, 100%, 100%, 0.54);
+    left: 25px;
+    top: 90px;
+    height: 20px;
+    width: 100%;
+	z-index: 9999;
+}
+</style>
+<script>
+window.APP_CALL=Object.create({
+		formHDs: new Array(),/*创建子窗体的句柄*/
+		formHDIndex: 0,
+		/////////////////////[触发事件回调]/////////////////////////
+		onFocus:function(){},/*当前窗口失去焦点,触发此函数*/
+		onLoseFocus:function(){},/*当前窗口获得焦点,触发此函数*/
+		onShow:function(){},/*当前窗口被显示时,触发此函数*/
+		onHide:function(){},/*当前窗口被隐藏时,触发此函数*/
+		onClose:function(){},/*当前窗口被关闭时,触发此函数*/
+		onFormShow:function(HD){},/*子窗口被显示时,触发此函数*/
+		onFormClose:function(HD){},/*子窗口被关闭时,触发此函数*/
+		onFormHide:function(HD){},/*子窗口被隐藏时,触发此函数*/
+		onNewUrl:function(HD){},/*子窗口打开链接时,触发此函数*/
+		onLoadComplete:function(HD){},/*子窗口加载完成时,触发此函数*/
+		/////////////////////[当前窗口控制]/////////////////////////
+		GetThisHD: function() {/*获取当前窗口句柄*/
+			return APP_GetThisHD();
+		},
+		GetParentHD: function() {/*获取父窗口句柄*/
+			return APP_GetParentHD();
+		},
+		OnTaskBar: function(b) {/*显示或隐藏任务栏*/
+			return APP_OnTaskBar(b);
+		},
+		closeForm: function() {/*关闭当前窗口, 主窗体关闭时为退出程序*/
+			APP_closeForm();
+		},
+		hideForm: function() {/*隐藏当前窗口*/
+			APP_hideForm();
+		},
+		resizeForm: function(w,h) {/*调整当前窗口长宽*/
+			APP_resizeForm(w,h);
+		},
+		moveForm: function(x,y) {/*移动当前窗口位置*/
+			APP_moveForm(x,y);
+		},
+		GetScreenWH: function() {/*获取桌面长宽*/
+			tmpWHint=APP_GetScreenWH().split(',');
+			tmpWHint[0]=parseInt(tmpWHint[0]);
+			tmpWHint[1]=parseInt(tmpWHint[1]);
+			return tmpWHint;
+		},
+		GetClipbrd: function() {/*获取剪切板文本*/
+			tmpWH=APP_GetClipbrd();
+			return tmpWH?tmpWH:'';
+		},
+		SetClipbrd: function(s) {/*复制文本到剪切板, 有编码问题, 建议不要使用*/
+			return APP_SetClipbrd(s);
+		},
+		///////////////[控制指定HD(句柄)的窗口]////////////////
+		//主窗口的HD为0
+		newForm: function() {/*创建新窗体*/
+			var tmpHD=APP_newForm();
+			this.formHDs[this.formHDIndex]=Object.create({
+				formHD:tmpHD,
+			});
+			return tmpHD;
+		},
+		newTopForm: function() {/*创建新置顶窗体*/
+			var tmpHD=parseInt(APP_newTopForm());
+			this.formHDs[this.formHDIndex]=Object.create({
+				formHD:tmpHD,
+			});
+			return tmpHD;
+		},
+		WinExec: function(c,s) {/*执行系统命令*/
+			return APP_WinExec(c,s);
+		},
+		FormLoadFile: function(HD,f) {/*指定句柄窗体加载html文件*/
+			return HD+1>1?APP_Form_LoadFile(HD,f):false;
+		},
+		FormLoadURL: function(HD,u) {/*指定句柄窗体加载url地址*/
+			return HD+1>1?APP_Form_LoadURL(HD,u):false;
+		},
+		FormLoadHTML: function(HD,c) {/*指定句柄窗体加载html代码*/
+			return HD+1>1?APP_Form_LoadHTML(HD,c):false;
+		},
+		FormsetWH: function(HD,w,h) {/*设置指定句柄窗体长宽*/
+			return HD+1>1?APP_Form_setWH(HD,w,h):false;
+		},
+		FormsetMv: function(HD,x,y,w,h) {/*设置指定句柄窗体可被鼠标拖动窗口的区域*/
+			return APP_Form_setMv(HD,x,y,w,h);
+		},
+		FormFormShow: function(HD,b) {/*显示或隐藏指定句柄窗体,传入值b为布尔值*/
+			return APP_Form_FormShow(HD,b);
+		},
+		SetAppTitle: function(t) {/*设置任务栏显示title*/
+			return APP_SetAppTitle(t);
+		},
+		FormsetUserAgent: function(HD,u) {/*设置指定句柄窗体的UserAgent, 可随时更改, 实时生效*/
+			return HD+1>1?APP_Form_setUserAgent(HD,u):false;
+		},
+		FormClose: function(HD) {/*关闭指定句柄窗体*/
+			return HD+1>1?APP_Form_close(HD):false;
+		},
+		FormSetOnTop: function(HD) {/*指定句柄窗体始终保持最顶端*/
+			return APP_Form_SetOnTop(HD);
+		},
+		FormMove: function(HD,x,y) {/*移动指定句柄窗体*/
+			return HD+1>1?APP_Form_Move(HD,x,y):false;
+		},
+		FormRunjs: function(HD,s) {/*注入指定句柄窗体javascript环境执行js代码*/
+			return HD+1>1?APP_Form_RunJS(HD,s):false;
+		},
+		FormRunjsPlus: function(HD,s) {/*同上*/
+			return HD+1>1?APP_Form_RunJSPlus(HD,s):false;
+		},
+		FormGetXY: function(HD) {/*获取指定句柄窗体坐标位置*/
+			tmpWHint=APP_Form_GetXY(HD).split(',');
+			tmpWHint[0]=parseInt(tmpWHint[0]);
+			tmpWHint[1]=parseInt(tmpWHint[1]);
+			return tmpWHint;
+		},
+		FormHide: function(HD) {/*隐藏指定句柄窗体*/
+			return HD+1>1?APP_Form_FormHide(HD):false;
+		},
+		Form_FormSCCPD: function(HD,id) {/*下面5个函数的公共封装*/
+			return APP_Form_FormSCCPD(HD,id);
+		},
+		Form_SelectAll: function(HD) {/*指定句柄窗体快捷键, Ctrl+A*/
+			return this.Form_FormSCCPD(HD,1);
+		},
+		Form_Copy: function(HD) {/*指定句柄窗体快捷键, Ctrl+C*/
+			return this.Form_FormSCCPD(HD,2);
+		},
+		Form_Cut: function(HD) {/*指定句柄窗体快捷键, Ctrl+X*/
+			return this.Form_FormSCCPD(HD,3);
+		},
+		Form_Paste: function(HD) {/*指定句柄窗体快捷键, Ctrl+V*/
+			return this.Form_FormSCCPD(HD,4);
+		},
+		Form_Delete: function(HD) {/*指定句柄窗体快捷键, Delete*/
+			return this.Form_FormSCCPD(HD,5);
+		},
+});
+
+</script>
+
+</head>
+
+<body onload='window_onload()'>
+<!--p style="height:120px;width:450px"-->
+<script>
+window.testHD=0;
+
+function gettestHD()
+{
+	if(window.testHD==0)
+	{
+		window.testHD=APP_CALL.FormRunjs(APP_CALL.GetParentHD(),'return testHD');
+		return window.testHD;
+	}else{
+		return window.testHD;
+	}
+}
+
+function mlast()
+{
+	APP_CALL.FormRunjs(gettestHD(),'$(".fm-pre").find(".mask-text").click()');
+}
+function mplay()
+{
+	if(APP_CALL.FormRunjs(gettestHD(),"player.getState()")+''=="playing")
+	{
+		btnplay.style.display="block";
+		btnpause.style.display="none";
+		APP_CALL.FormRunjs(gettestHD(),"player.pause()");
+		//$('.play')[0].click()
+	}else{
+		btnplay.style.display="none";
+		btnpause.style.display="block";
+		APP_CALL.FormRunjs(gettestHD(),"player.play()");
+	}
+	//getimgname();
+}
+function mnext()
+{
+	APP_CALL.FormRunjs(gettestHD(),'$(".fm-play-panel").find(".fm-next a").click()');
+}
+
+function getimgname()
+{
+	playimg.src=APP_CALL.FormRunjs(gettestHD(),"$('.fm-album')[0].getElementsByTagName('img')[0].src")+'?_='+(new Date()).valueOf();
+	musicname.innerHTML=APP_CALL.FormRunjs(gettestHD(),"$('.fm-song-title')[0].innerText");
+	//$('.fm-song-title')[0].innerText
+}
+
+window.APP_CALL.onShow=function()
+{
+	getimgname();
+	bebugsh.innerHTML+='onShow';
+	//APP_CALL.FormRunjs(gettestHD(),"player.play=function(){player.playx();APP_CALL.FormRunjs("+APP_CALL.GetThisHD()+",'getimgname()');}");
+	if(APP_CALL.FormRunjs(gettestHD(),"player.getState()")+''=="playing")
+	{
+		btnplay.style.display="block";
+		btnpause.style.display="none";
+	}else{
+		btnplay.style.display="none";
+		btnpause.style.display="block";
+	}
+}
+
+function returnbig()
+{
+	APP_CALL.FormFormShow(gettestHD(),true);
+	window.APP_CALL.hideForm();
+	window.APP_CALL.OnTaskBar(true);
+	//APP_CALL.moveForm(window.screen.availWidth-500, window.screen.availHeight-160);
+	//window.APP_CALL.FormSetOnTop(window.APP_CALL.GetThisHD());
+}
+
+function window_onload()
+{
+	//bebugsh.innerHTML='';
+	//window.APP_CALL.FormSetOnTop(window.APP_CALL.GetThisHD());
+}
+window.APP_CALL.onShow=function()
+{
+	//bebugsh.innerHTML+=window.APP_CALL.GetThisHD();
+	window.APP_CALL.OnTaskBar(false);
+	//bebugsh.innerHTML+='onShow'+window.APP_CALL.GetThisHD();
+	//APP_CALL.moveForm(window.screen.availWidth-500, window.screen.availHeight-160);
+	getimgname();
+}
+
+function copydownlnk()
+{
+	//SongDataModel.allSongCache[SongDataModel._lrc_fetch_id].links.auto_0.songLink
+	cxccc=APP_CALL.FormRunjs(gettestHD(),"SongDataModel.allSongCache[SongDataModel._lrc_fetch_id].links.auto_0.songLink");
+	//bebugsh.value=cxccc;
+	//bebugsh.focus();
+	//bebugsh.select();
+	//APP_CALL.Form_Copy(APP_CALL.GetThisHD());
+	APP_CALL.WinExec('cmd /c start '+cxccc,false);
+	//bebugsh.innerHTML=cxccc;
+}
+</script>
+<!--右边折叠菜单html代码--->
+<div id='errmsg' style="display: none"><textarea id="errtxtout" rows="8" cols="10" style="resize:none;width: 100%;"></textarea></div>
+<div  style="height:120px;width:450px; display: block;">
+<div id="righteject">
+	<strong class="rightejecttit" id="jiantou" style="background: url(player_bg.png) no-repeat -23px 0;"><span id="jiantou"></span></strong>
+    <div class="rightejectcon" style="width: 400px; display: block;">
+		<div class="music_info"><span id="musicname">   等待播放...</span></div>
+		<div class="music_info2"><span id="lrcsw">歌词...</span></div>
+		<div class="bar_op">
+			<div class="music_inf"><a href='javascript:void(0)' style='display: block;text-decoration: none;color:#696868' onclick='copydownlnk()'><span id="bebugsh">下载</span></a></div>
+			<strong title="上一首" class="prev_bt" onclick='mlast()'><span></span></strong>
+			<strong title="播放" class="play_bt" id="btnplay" onclick="mplay()"><span></span></strong>
+			<strong title="暂停" class="pause_bt" id="btnpause" style="display: none" onclick="mplay()"><span></span></strong>
+			<strong title="下一首" class="next_bt" onclick="mnext()"><span></span></strong>
+		</div>
+		<a href='javascript:void(0)' onclick='returnbig()'><img id="playimg" style="position: absolute;top:10px;left: 310px" title='点击显示主窗体' width=90 height=90 src="cover_mine_130.jpg"></a>
+    </div>
+</div>
+</div>
+<!--/p-->
+<script>
+//document.body.clientWidth=120;
+//document.body.clientHeight=450;
+//APP_CALL.resizeForm(500,160);
+//swh=APP_CALL.GetScreenWH();
+//dotxtout(swh);
+	//getimgname();
+	//APP_CALL.FormRunjs(gettestHD(),"player.play=function(){player.playx();APP_CALL.FormRunjs("+APP_CALL.GetThisHD()+",'getimgname()');}");
+
+</script>
+
+</body>
+</html>
